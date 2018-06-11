@@ -4,6 +4,14 @@ var fs = require('fs');
 
 require('dotenv').config()
 
+// Make sure there are no problems with the .env file
+if (!fs.existsSync('./.env')) {
+    console.log('Error: .env file does not exist');
+}
+if(!process.env.GITHUB_TOKEN) {
+  console.log('.env file is missing information');
+}
+
 
 // Take command line arguments as inputs
 var owner = process.argv[2];
@@ -33,6 +41,9 @@ function getRepoContributors(repoOwner, repoName, cb) {
 
 
   request(options, function(err, res, body) {
+    if (err) {
+      throw err;
+    }
     var data = JSON.parse(body);
     cb(data);
   });
