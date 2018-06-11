@@ -1,8 +1,7 @@
 var request = require('request');
-var secrets = require('./secrets.js');
 var fs = require('fs');
 
-require('dotenv').config()
+require('dotenv').config();
 
 // Make sure there are no problems with the .env file
 if (!fs.existsSync('./.env')) {
@@ -35,7 +34,7 @@ function getRepoContributors(repoOwner, repoName, cb) {
     url: "https://api.github.com/repos/" + repoOwner + "/" + repoName + "/contributors",
     headers: {
       'User-Agent': 'request',
-      'Authorization': process.env.GITHUB_TOKEN
+      'Authorization': 'token ' + process.env.GITHUB_TOKEN
     }
   };
 
