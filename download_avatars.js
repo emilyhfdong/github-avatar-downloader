@@ -5,7 +5,15 @@ var fs = require('fs');
 var owner = process.argv[2];
 var name = process.argv[3];
 
+
 console.log('Welcome to the GitHub Avatar Downloader!');
+
+if (owner == undefined) {
+  console.log('Error: Please define a repo owner');
+}
+if (name == undefined) {
+  console.log('Error: Please define a repo name');
+}
 
 function getRepoContributors(repoOwner, repoName, cb) {
 
