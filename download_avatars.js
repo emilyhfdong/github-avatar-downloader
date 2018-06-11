@@ -2,12 +2,14 @@ var request = require('request');
 var secrets = require('./secrets.js');
 var fs = require('fs');
 
+// Take command line arguments as inputs
 var owner = process.argv[2];
 var name = process.argv[3];
 
 
 console.log('Welcome to the GitHub Avatar Downloader!');
 
+// Make arguments required
 if (owner == undefined) {
   console.log('Error: Please define a repo owner');
 }
@@ -15,6 +17,7 @@ if (name == undefined) {
   console.log('Error: Please define a repo name');
 }
 
+//Define function to get repo contributor data
 function getRepoContributors(repoOwner, repoName, cb) {
 
   var options = {
@@ -32,7 +35,12 @@ function getRepoContributors(repoOwner, repoName, cb) {
   });
 }
 
+// function to download image, given the url and the login data
 function downloadImageByURL(url, filePath) {
+  if (!fs.existsSync('./avatars')){
+    fs.mkdirSync('./avatars');
+  }
+
   request.get(url)
        .on('error', function (err) {
          throw err;
@@ -41,7 +49,7 @@ function downloadImageByURL(url, filePath) {
 
 }
 
-
+// call function to download image by url
 getRepoContributors(owner, name, function (data) {
   for (var i = 0; i < data.length; i ++ ) {
     var filePath = './avatars/' + data[i].login + '.jpg';
